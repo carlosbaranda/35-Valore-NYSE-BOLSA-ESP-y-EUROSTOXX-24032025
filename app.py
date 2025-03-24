@@ -21,9 +21,11 @@ def obtener_datos(tickers):
                 hoy = (hist["Close"][-1] - hist["Open"][-1]) / hist["Open"][-1] * 100
                 semana = (hist["Close"][-1] - hist["Close"][-6]) / hist["Close"][-6] * 100
                 ytd = (hist["Close"][-1] - hist["Close"][0]) / hist["Close"][0] * 100
+                mercado = mercado_dict.get(ticker, "Desconocido")
                 data.append({
                     "Ticker": ticker,
                     "Nombre": info.get("shortName", ""),
+                    "Mercado": mercado,
                     "Cambio Día (%)": round(hoy, 2),
                     "Cambio Semana (%)": round(semana, 2),
                     "Cambio YTD (%)": round(ytd, 2)
@@ -32,13 +34,170 @@ def obtener_datos(tickers):
             continue
     return pd.DataFrame(data)
 
+mercado_dict = {
+    "AAPL": "NYSE",
+    "MSFT": "NYSE",
+    "GOOGL": "NYSE",
+    "AMZN": "NYSE",
+    "TSLA": "NYSE",
+    "META": "NYSE",
+    "NVDA": "NYSE",
+    "JPM": "NYSE",
+    "WMT": "NYSE",
+    "UNH": "NYSE",
+    "KO": "NYSE",
+    "PEP": "NYSE",
+    "V": "NYSE",
+    "BAC": "NYSE",
+    "HD": "NYSE",
+    "DIS": "NYSE",
+    "MA": "NYSE",
+    "PYPL": "NYSE",
+    "INTC": "NYSE",
+    "IBM": "NYSE",
+    "CSCO": "NYSE",
+    "ORCL": "NYSE",
+    "NFLX": "NYSE",
+    "T": "NYSE",
+    "CVX": "NYSE",
+    "PFE": "NYSE",
+    "XOM": "NYSE",
+    "C": "NYSE",
+    "MCD": "NYSE",
+    "BA": "NYSE",
+    "ABT": "NYSE",
+    "CRM": "NYSE",
+    "MRK": "NYSE",
+    "QCOM": "NYSE",
+    "NKE": "NYSE",
+    "SAN.MC": "España",
+    "BBVA.MC": "España",
+    "ITX.MC": "España",
+    "IBE.MC": "España",
+    "REP.MC": "España",
+    "AMS.MC": "España",
+    "ANA.MC": "España",
+    "CABK.MC": "España",
+    "CLNX.MC": "España",
+    "ENG.MC": "España",
+    "FER.MC": "España",
+    "GRF.MC": "España",
+    "IAG.MC": "España",
+    "MAP.MC": "España",
+    "TEF.MC": "España",
+    "ACX.MC": "España",
+    "AENA.MC": "España",
+    "ALM.MC": "España",
+    "BKT.MC": "España",
+    "COL.MC": "España",
+    "ELE.MC": "España",
+    "ENC.MC": "España",
+    "EQT.MC": "España",
+    "FCC.MC": "España",
+    "LOG.MC": "España",
+    "MEL.MC": "España",
+    "NTGY.MC": "España",
+    "PHM.MC": "España",
+    "RED.MC": "España",
+    "R4.MC": "España",
+    "SAB.MC": "España",
+    "SGRE.MC": "España",
+    "SPS.MC": "España",
+    "VIS.MC": "España",
+    "ZOT.MC": "España",
+    "AIR.PA": "EuroStoxx",
+    "ADS.DE": "EuroStoxx",
+    "ALV.DE": "EuroStoxx",
+    "BN.PA": "EuroStoxx",
+    "ENEL.MI": "EuroStoxx",
+    "ENGI.PA": "EuroStoxx",
+    "OR.PA": "EuroStoxx",
+    "SAP.DE": "EuroStoxx",
+    "SIE.DE": "EuroStoxx",
+    "SU.PA": "EuroStoxx",
+    "TTE.PA": "EuroStoxx",
+    "VOW3.DE": "EuroStoxx",
+    "DTE.DE": "EuroStoxx",
+    "DPW.DE": "EuroStoxx",
+    "BAS.DE": "EuroStoxx",
+    "BAYN.DE": "EuroStoxx",
+    "BMW.DE": "EuroStoxx",
+    "CRH.L": "EuroStoxx",
+    "DAI.DE": "EuroStoxx",
+    "KER.PA": "EuroStoxx",
+    "LVMH.PA": "EuroStoxx",
+    "MC.PA": "EuroStoxx",
+    "MT.AS": "EuroStoxx",
+    "PHIA.AS": "EuroStoxx",
+    "RWE.DE": "EuroStoxx",
+    "SGO.PA": "EuroStoxx",
+    "URW.AS": "EuroStoxx",
+    "ZAL.DE": "EuroStoxx",
+    "ATCO-A.ST": "EuroStoxx",
+    "HEIA.AS": "EuroStoxx",
+    "IFX.DE": "EuroStoxx",
+    "LIN.DE": "EuroStoxx",
+    "UCG.MI": "EuroStoxx",
+    "STLA.MI": "EuroStoxx",
+    "ENI.MI": "EuroStoxx",
+    "SPY": "ETF",
+    "QQQ": "ETF",
+    "DIA": "ETF",
+    "VTI": "ETF",
+    "IWM": "ETF",
+    "EFA": "ETF",
+    "EEM": "ETF",
+    "VNQ": "ETF",
+    "LQD": "ETF",
+    "HYG": "ETF",
+    "XLF": "ETF",
+    "XLK": "ETF",
+    "XLE": "ETF",
+    "XLY": "ETF",
+    "XLV": "ETF",
+    "XLI": "ETF",
+    "XLB": "ETF",
+    "XLC": "ETF",
+    "XLRE": "ETF",
+    "ARKK": "ETF",
+    "ARKW": "ETF",
+    "ARKF": "ETF",
+    "ARKG": "ETF",
+    "ARKQ": "ETF",
+    "ARKX": "ETF",
+    "SOXX": "ETF",
+    "SMH": "ETF",
+    "IBB": "ETF",
+    "VHT": "ETF",
+    "IYZ": "ETF",
+    "XRT": "ETF",
+    "XHB": "ETF",
+    "XME": "ETF",
+    "ITA": "ETF",
+    "IYT": "ETF",
+}
+
 df = obtener_datos(tickers)
+
+
+st.subheader("🔎 Filtro por mercado")
+mercado_seleccionado = st.selectbox("Selecciona un mercado:", ["Todos"] + sorted(df["Mercado"].unique()))
+if mercado_seleccionado != "Todos":
+    df = df[df["Mercado"] == mercado_seleccionado]
+
 
 if not df.empty:
     st.subheader("📈 Datos Generales")
     st.dataframe(df, use_container_width=True)
 
 # --- Gráfico por ticker con medias móviles y volumen ---
+
+st.subheader("🔎 Filtro por mercado")
+mercado_seleccionado = st.selectbox("Selecciona un mercado:", ["Todos"] + sorted(df["Mercado"].unique()))
+if mercado_seleccionado != "Todos":
+    df = df[df["Mercado"] == mercado_seleccionado]
+
+
 if not df.empty:
     st.subheader("📊 Evolución del precio con medias móviles y volumen")
     seleccion = st.selectbox("Selecciona un ticker:", df["Ticker"])
@@ -48,7 +207,7 @@ if not df.empty:
         hist["Media 200"] = hist["Close"].rolling(200).mean()
 
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True, gridspec_kw={'height_ratios': [2, 1]})
-        hist[["Close", "Media 50", "Media 200"]].plot(ax=ax1)
+        hist[["Close", "Media 50", "Media 200"]].dropna().plot(ax=ax1)
         ax1.set_ylabel("Precio")
         ax1.set_title(f"Evolución de {seleccion}")
 
