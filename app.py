@@ -180,13 +180,8 @@ mercado_dict = {
 df = obtener_datos(tickers)
 
 
-
 st.subheader("🔎 Filtro por mercado")
-mercado_seleccionado = st.selectbox(
-    "Selecciona un mercado:",
-    ["Todos"] + sorted(df["Mercado"].unique()),
-    key="filtro_mercado"
-)
+mercado_seleccionado = st.selectbox("Selecciona un mercado:", ["Todos"] + sorted(df["Mercado"].unique()), key="filtro_mercado")
 if mercado_seleccionado != "Todos":
     df = df[df["Mercado"] == mercado_seleccionado]
 
@@ -197,13 +192,8 @@ if not df.empty:
 
 # --- Gráfico por ticker con medias móviles y volumen ---
 
-
 st.subheader("🔎 Filtro por mercado")
-mercado_seleccionado = st.selectbox(
-    "Selecciona un mercado:",
-    ["Todos"] + sorted(df["Mercado"].unique()),
-    key="filtro_mercado"
-)
+mercado_seleccionado = st.selectbox("Selecciona un mercado:", ["Todos"] + sorted(df["Mercado"].unique()), key="filtro_mercado")
 if mercado_seleccionado != "Todos":
     df = df[df["Mercado"] == mercado_seleccionado]
 
